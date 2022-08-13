@@ -1,0 +1,11 @@
+{
+  "name": "carousell-infinite-scroll",
+  "description": "Chrome extension to enable infinite scrolling on the Carousell Website",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^4.7.4"
+  }
+}
