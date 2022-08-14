@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2016",
     "module": "commonjs",
     "outDir": "scripts",
-    "removeComments": true
+    "removeComments": true,
+    "downlevelIteration": true
   },
   "include": [
     "src/**/*"
