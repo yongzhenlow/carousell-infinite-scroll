@@ -1,36 +1,41 @@
-window.addEventListener('load', function () {
-    var timeoutId;
-    var timeoutDuration = 1000;
-    var isObserving = false;
-    var observerOptions = {
+window.addEventListener('load', () => {
+    const observerOptions = {
         root: null,
         rootMargin: '0px',
         threshold: 0,
     };
-    timeoutId = setTimeout(observeButton, timeoutDuration);
+    observeButton();
     function observeButton() {
-        var buttonElement = document.querySelector('main > div > button:last-child');
-        if (buttonElement && !isObserving) {
-            isObserving = true;
-            var observer_1 = new IntersectionObserver(function (entries) {
-                for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
-                    var entry = entries_1[_i];
-                    var intersectionRatio = entry.intersectionRatio, isIntersecting = entry.isIntersecting, target = entry.target;
+        var _a;
+        const buttonElement = (_a = document.querySelector('main > div > button:last-child')) !== null && _a !== void 0 ? _a : document.querySelector('#root > div > div > div > button:last-child');
+        if (buttonElement) {
+            const observer = new IntersectionObserver((entries) => {
+                for (const entry of entries) {
+                    const { intersectionRatio, isIntersecting, target } = entry;
                     if (intersectionRatio > observerOptions.threshold ||
                         isIntersecting) {
                         ;
                         target.click();
-                        isObserving = false;
-                        observer_1.unobserve(target);
-                        clearTimeout(timeoutId);
-                        timeoutId = setTimeout(observeButton, timeoutDuration);
+                        observer.unobserve(target);
                     }
                 }
             }, observerOptions);
-            observer_1.observe(buttonElement);
+            observer.observe(buttonElement);
+            const mutationObserver = new MutationObserver((mutationList) => {
+                const removed = mutationList.some((mutation) => Array.from(mutation.removedNodes).includes(buttonElement));
+                if (removed) {
+                    mutationObserver.disconnect();
+                    observer.unobserve(buttonElement);
+                    observeButton();
+                }
+            });
+            mutationObserver.observe(document.querySelector('#root'), {
+                childList: true,
+                subtree: true,
+            });
         }
         else {
-            timeoutId = setTimeout(observeButton, timeoutDuration);
+            setTimeout(observeButton, 2000);
         }
     }
 }, false);
