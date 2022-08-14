@@ -1,6 +1,6 @@
 {
   "name": "Carousell Infinite Scroll",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 3,
   "description": "Infinite Scrolling for the Carousell Website",
   "icons": {
