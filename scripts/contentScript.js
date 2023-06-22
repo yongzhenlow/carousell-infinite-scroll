@@ -1,4 +1,15 @@
-const cisInfiniteScroll = () => {
+let lastUrl = location.href;
+new MutationObserver(() => {
+    const url = location.href;
+    if (url !== lastUrl) {
+        lastUrl = url;
+        onUrlChange();
+    }
+}).observe(document, { subtree: true, childList: true });
+function onUrlChange() {
+    beginInfiniteScroll();
+}
+function beginInfiniteScroll() {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
@@ -13,7 +24,7 @@ const cisInfiniteScroll = () => {
                 for (const entry of entries) {
                     const { intersectionRatio, isIntersecting, target } = entry;
                     if (intersectionRatio > observerOptions.threshold || isIntersecting) {
-                        console.log('wtf');
+                        ;
                         target.click();
                         observer.unobserve(target);
                     }
@@ -37,7 +48,5 @@ const cisInfiniteScroll = () => {
             setTimeout(observeButton, 2000);
         }
     }
-};
-['load', 'popstate'].forEach(function (e) {
-    window.addEventListener(e, cisInfiniteScroll, false);
-});
+}
+window.addEventListener('load', beginInfiniteScroll, false);
