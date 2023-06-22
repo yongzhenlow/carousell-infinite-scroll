@@ -13,10 +13,10 @@ window.addEventListener(
       // Check button is in listing page or 'you may like' section
       const buttonElement =
         document.querySelector<HTMLButtonElement>(
-          'main > div > button:last-child'
+          '#main > div.D_S > div > section.D_af > div.D_ak > div > button'
         ) ??
         document.querySelector<HTMLButtonElement>(
-          '#root > div > div > div > button:last-child'
+          '#main > div.D_gh > div > button'
         )
 
       if (buttonElement) {
